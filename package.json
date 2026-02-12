@@ -1,0 +1,25 @@
+{
+  "name": "lockaudit",
+  "version": "0.1.0",
+  "description": "CLI tool that ingests package-lock.json into an embedded property graph and enriches it for dependency and vulnerability analysis.",
+  "description": "",
+  "main": "src/index.js",
+  "bin": {
+    "lockaudit": "./bin/lockaudit.js"
+  },
+  "scripts": {
+    "start": "node bin/lockaudit.js",
+    "dev": "node --trace-warnings bin/lockaudit.js"
+  },
+  "keywords": ["npm","package-lock","dependency-graph","supply-chain","security","cve","vulnerability","graph-database","ladybugdb","cli"],
+  "author": "Geoff Storbeck",
+  "license": "MIT",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storbeck/lockaudit.git"
+  },
+  "dependencies": {
+    "lbug": "^0.14.3"
+  }
+}
