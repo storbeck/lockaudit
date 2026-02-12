@@ -5,17 +5,23 @@ const fs = require("fs")
 const { run } = require("../src/index")
 
 async function main() {
-  const input = process.argv[2]
+  const projectRootInput = process.argv[2]
 
-  if (!input) {
-    console.error("Usage: lockaudit <path-to-package-lock.json>")
+  if (!projectRootInput) {
+    console.error("Usage: lockaudit <project-root>")
     process.exit(1)
   }
 
-  const fullPath = path.resolve(input)
+  const fullPath = path.resolve(projectRootInput)
 
   if (!fs.existsSync(fullPath)) {
-    console.error("File not found:", fullPath)
+    console.error("Path not found:", fullPath)
+    process.exit(1)
+  }
+
+  const stat = fs.statSync(fullPath)
+  if (!stat.isDirectory()) {
+    console.error("Expected a project root directory:", fullPath)
     process.exit(1)
   }
 

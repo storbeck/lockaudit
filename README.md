@@ -1,9 +1,10 @@
 # lockaudit
 
 `lockaudit` is a CLI that:
-1. Parses an npm `package-lock.json`.
-2. Ingests package/dependency data into a local Ladybug graph (`lockaudit.ldbg`).
-3. Enriches packages with OSV vulnerability data.
+1. Accepts a project root directory.
+2. Automatically generates an SBOM.
+3. Ingests package/dependency data into a local Ladybug graph (`lockaudit.ldbg`).
+4. Enriches packages with OSV vulnerability data.
 
 Current graph model:
 1. `(:Package { key, name, version, resolved, integrity, dev, is_optional })`
@@ -19,17 +20,21 @@ npm install
 
 ## Build And Run
 
-Run against a lockfile:
+Run against a project directory (recommended):
 
 ```bash
-lockaudit /absolute/path/to/package-lock.json
+lockaudit /absolute/path/to/project
 ```
 
 Or without global bin:
 
 ```bash
-node bin/lockaudit.js /absolute/path/to/package-lock.json
+node bin/lockaudit.js /absolute/path/to/project
 ```
+
+Requirements:
+1. Project root must contain `package-lock.json`.
+2. `npx` must be available.
 
 This creates/updates `lockaudit.ldbg` in the repo root.
 

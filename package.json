@@ -1,8 +1,7 @@
 {
   "name": "lockaudit",
   "version": "0.1.0",
-  "description": "CLI tool that ingests package-lock.json into an embedded property graph and enriches it for dependency and vulnerability analysis.",
-  "description": "",
+  "description": "CLI tool that generates an SBOM, ingests it into an embedded property graph, and enriches it for dependency and vulnerability analysis.",
   "main": "src/index.js",
   "bin": {
     "lockaudit": "./bin/lockaudit.js"
@@ -11,7 +10,7 @@
     "start": "node bin/lockaudit.js",
     "dev": "node --trace-warnings bin/lockaudit.js"
   },
-  "keywords": ["npm","package-lock","dependency-graph","supply-chain","security","cve","vulnerability","graph-database","ladybugdb","cli"],
+  "keywords": ["npm","sbom","dependency-graph","supply-chain","security","cve","vulnerability","graph-database","ladybugdb","cli"],
   "author": "Geoff Storbeck",
   "license": "MIT",
   "type": "commonjs",
