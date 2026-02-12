@@ -5,6 +5,7 @@
 2. Automatically generates an SBOM.
 3. Ingests package/dependency data into a local Ladybug graph (`lockaudit.ldbg`).
 4. Enriches packages with OSV vulnerability data.
+5. Answers remediation questions from the graph via `ask`.
 
 Current graph model:
 1. `(:Package { key, name, version, resolved, integrity, dev, is_optional })`
@@ -23,13 +24,13 @@ npm install
 Run against a project directory (recommended):
 
 ```bash
-lockaudit /absolute/path/to/project
+lockaudit ingest /absolute/path/to/project
 ```
 
-Or without global bin:
+Shortcut (same as `ingest`):
 
 ```bash
-node bin/lockaudit.js /absolute/path/to/project
+lockaudit /absolute/path/to/project
 ```
 
 Requirements:
@@ -44,6 +45,43 @@ This creates/updates `lockaudit.ldbg` in the repo root.
 lbug lockaudit.ldbg --path_history .
 ```
 
+## Ask The Agent
+
+Ask prioritization/remediation questions:
+
+```bash
+lockaudit ask "What should we fix this week?"
+lockaudit ask "Show direct vs transitive exposure breakdown"
+lockaudit ask "Explain GHSA-gxpj-cx7g-858c"
+lockaudit ask "Explain package lodash"
+```
+
+Optional flags:
+
+```bash
+lockaudit ask "Top risks" --db ./lockaudit.ldbg
+lockaudit ask "Top risks" --model gpt-4.1-mini
+lockaudit ask "Top risks" --openai-base-url https://api.openai.com/v1
+```
+
+### LLM Required (OpenAI API)
+
+`ask` is LLM-only and uses the OpenAI API to generate and run read-only Cypher queries against your graph, then answer from those results.
+
+```bash
+export OPENAI_API_KEY=your_key_here
+lockaudit ask "What should we fix this week?"
+lockaudit ask "Explain GHSA-gxpj-cx7g-858c with direct/transitive context" --model gpt-4.1-mini
+```
+
+Custom base URL (compatible OpenAI endpoint):
+
+```bash
+lockaudit ask "Top priorities" --openai-base-url https://api.openai.com/v1
+```
+
+If `OPENAI_API_KEY` is missing (or the model is unavailable), `ask` fails with an error.
+
 Recommended shell settings for readable long output:
 
 ```text
@@ -52,7 +90,7 @@ Recommended shell settings for readable long output:
 :stats off
 ```
 
-## Useful Queries
+## Useful Cypher Queries
 
 ```cypher
 -- 1) Counts overview

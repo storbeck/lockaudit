@@ -10,7 +10,18 @@
     "start": "node bin/lockaudit.js",
     "dev": "node --trace-warnings bin/lockaudit.js"
   },
-  "keywords": ["npm","sbom","dependency-graph","supply-chain","security","cve","vulnerability","graph-database","ladybugdb","cli"],
+  "keywords": [
+    "npm",
+    "sbom",
+    "dependency-graph",
+    "supply-chain",
+    "security",
+    "cve",
+    "vulnerability",
+    "graph-database",
+    "ladybugdb",
+    "cli"
+  ],
   "author": "Geoff Storbeck",
   "license": "MIT",
   "type": "commonjs",
@@ -19,6 +30,7 @@
     "url": "https://github.com/storbeck/lockaudit.git"
   },
   "dependencies": {
-    "lbug": "^0.14.3"
+    "lbug": "^0.14.3",
+    "openai": "^4.104.0"
   }
 }
