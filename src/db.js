@@ -10,6 +10,7 @@ async function openDatabase(file = "lockaudit.ldbg") {
 }
 
 async function ensureSchema(conn) {
+  // (:Package)
   await conn.query(`
     CREATE NODE TABLE IF NOT EXISTS Package(
       key STRING PRIMARY KEY,
@@ -22,10 +23,30 @@ async function ensureSchema(conn) {
     )
   `)
 
+  // (:Vulnerability)
+  await conn.query(`
+    CREATE NODE TABLE IF NOT EXISTS Vulnerability(
+      id STRING PRIMARY KEY,
+      source STRING,
+      summary STRING,
+      severity STRING,
+      published_at STRING,
+      modified_at STRING
+    )
+  `) 
+
+  // (:Package)-[:HAS_DEP]-(:Package)
   await conn.query(`
     CREATE REL TABLE IF NOT EXISTS HAS_DEP(
       FROM Package TO Package,
       dep_type STRING
+    )
+  `)
+
+  // (:Vulnerability)-[:AFFECTS]->(:Package)
+  await conn.query(`
+    CREATE REL TABLE IF NOT EXISTS AFFECTS(
+      FROM Vulnerability to Package
     )
   `)
 }

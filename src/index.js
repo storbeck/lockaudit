@@ -1,6 +1,7 @@
 const { parseLockFile } = require("./lockfile")
 const { openDatabase } = require("./db")
 const { ingest } = require("./ingest")
+const { enrichWithCves } = require('./enrich-cve')
 
 async function run(filePath) {
   console.log("Reading lockfile...")
@@ -11,6 +12,9 @@ async function run(filePath) {
 
   console.log("Ingesting...")
   await ingest(conn, lockfile, filePath)
+
+  console.log("Enriching with OSV...")
+  await enrichWithCves(conn)
 
   console.log("Done.")
 
